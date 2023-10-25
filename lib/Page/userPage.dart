@@ -18,130 +18,134 @@ class UserPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(body: controller.obx(
       (state) {
-        return Column(
-          children: [
-            Wrap(
-              children: [
-                SizedBox(
-                  width: MediaQuery.sizeOf(context).width - 100,
-                  height: 50,
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: TextField(
-                      controller: searchController,
-                      decoration: const InputDecoration(
-                        hintText: "Search",
-                        hintTextDirection: TextDirection.ltr,
-                        border: OutlineInputBorder(
-                          borderSide:
-                              BorderSide(color: Colors.black, width: 1.0),
-                        ),
-                        focusedBorder: OutlineInputBorder(
-                          borderSide:
-                              BorderSide(color: Colors.blue, width: 1.0),
-                        ),
-                        enabledBorder: OutlineInputBorder(
-                          borderSide:
-                              BorderSide(color: Colors.black, width: 1.0),
-                        ),
-                        errorBorder: OutlineInputBorder(
-                          borderSide: BorderSide(color: Colors.red, width: 1.0),
-                        ),
-                        disabledBorder: OutlineInputBorder(
-                          borderSide:
-                              BorderSide(color: Colors.grey, width: 1.0),
-                        ),
-                      ),
-                      onChanged: (value) {
-                        print(searchController.text);
-                        controller.update();
-                      },
-                    ),
-                  ),
-                ),
-                InkWell(
-                  onTap: () {
-                    getDailog(context);
-                  },
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Container(
-                      width: 80,
-                      color: Colors.grey,
+        return SafeArea(
+          child: Column(
+            children: [
+              Wrap(
+                children: [
+                  SizedBox(
+                    width: MediaQuery.sizeOf(context).width - 100,
+                    height: 50,
+                    child: Padding(
                       padding: const EdgeInsets.all(8.0),
-                      child: const Text(
-                        "Add User",
-                        style: TextStyle(color: Colors.white),
-                      ),
-                    ),
-                  ),
-                ),
-              ],
-            ),
-            Expanded(
-              child: ListView.builder(
-                  itemCount: controller.model.length,
-                  itemBuilder: (BuildContext context, int index) {
-                    if (controller.model[index].name
-                        .toString()
-                        .toLowerCase()
-                        .contains(searchController.text.toLowerCase())) {
-                      return Padding(
-                        padding: const EdgeInsets.all(10.0),
-                        child: Card(
-                          child: Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Row(
-                              children: [
-                                CircleAvatar(
-                                  child: Image.network(controller
-                                      .model[index].avatar
-                                      .toString()),
-                                ),
-                                const SizedBox(
-                                  width: 20,
-                                ),
-                                Column(
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                        "ID: ${controller.model[index].id.toString()}"),
-                                    Text(
-                                        "Name: ${controller.model[index].name.toString()}"),
-                                  ],
-                                ),
-                                const Spacer(),
-                                IconButton(
-                                    onPressed: () async {
-                                      await controller.deleteUser(controller
-                                          .model[index].id
-                                          .toString());
-                                    },
-                                    icon: const Icon(
-                                      Icons.delete,
-                                      color: Colors.redAccent,
-                                    )),
-                                IconButton(
-                                    onPressed: () async {
-                                      getEditDailog(
-                                          context, controller.model[index]);
-                                    },
-                                    icon: const Icon(
-                                      Icons.edit,
-                                      color: Colors.grey,
-                                    )),
-                              ],
-                            ),
+                      child: TextField(
+                        controller: searchController,
+                        decoration: const InputDecoration(
+                          hintText: "Search",
+                          hintTextDirection: TextDirection.ltr,
+                          border: OutlineInputBorder(
+                            borderSide:
+                                BorderSide(color: Colors.black, width: 1.0),
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                            borderSide:
+                                BorderSide(color: Colors.blue, width: 1.0),
+                          ),
+                          enabledBorder: OutlineInputBorder(
+                            borderSide:
+                                BorderSide(color: Colors.black, width: 1.0),
+                          ),
+                          errorBorder: OutlineInputBorder(
+                            borderSide:
+                                BorderSide(color: Colors.red, width: 1.0),
+                          ),
+                          disabledBorder: OutlineInputBorder(
+                            borderSide:
+                                BorderSide(color: Colors.grey, width: 1.0),
                           ),
                         ),
-                      );
-                    } else {
-                      return Container();
-                    }
-                  }),
-            ),
-          ],
+                        onChanged: (value) {
+                          print(searchController.text);
+                          controller.update();
+                        },
+                      ),
+                    ),
+                  ),
+                  InkWell(
+                    onTap: () {
+                      getDailog(context);
+                    },
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Container(
+                        width: 80,
+                        color: Colors.grey,
+                        padding: const EdgeInsets.all(8.0),
+                        child: const Text(
+                          "Add User",
+                          style: TextStyle(color: Colors.white),
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              Expanded(
+                child: ListView.builder(
+                    itemCount: controller.model.length,
+                    itemBuilder: (BuildContext context, int index) {
+                      if (controller.model[index].name
+                          .toString()
+                          .toLowerCase()
+                          .contains(searchController.text.toLowerCase())) {
+                        return Padding(
+                          padding: const EdgeInsets.all(10.0),
+                          child: Card(
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Row(
+                                children: [
+                                  CircleAvatar(
+                                    child: Image.network(controller
+                                        .model[index].avatar
+                                        .toString()),
+                                  ),
+                                  const SizedBox(
+                                    width: 20,
+                                  ),
+                                  Column(
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                          "ID: ${controller.model[index].id.toString()}"),
+                                      Text(
+                                          "Name: ${controller.model[index].name.toString()}"),
+                                    ],
+                                  ),
+                                  const Spacer(),
+                                  IconButton(
+                                      onPressed: () async {
+                                        await controller.deleteUser(controller
+                                            .model[index].id
+                                            .toString());
+                                      },
+                                      icon: const Icon(
+                                        Icons.delete,
+                                        color: Colors.redAccent,
+                                      )),
+                                  IconButton(
+                                      onPressed: () async {
+                                        getEditDailog(
+                                            context, controller.model[index]);
+                                      },
+                                      icon: const Icon(
+                                        Icons.edit,
+                                        color: Colors.grey,
+                                      )),
+                                ],
+                              ),
+                            ),
+                          ),
+                        );
+                      } else {
+                        return Container();
+                      }
+                    }),
+              ),
+            ],
+          ),
         );
       },
     ));
